@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import './App.css';
+import '../App.css';
 import TimeLine from './TimeLine';
 import SetIntervals from './SetInterval'
 
