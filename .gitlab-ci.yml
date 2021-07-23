@@ -1,0 +1,29 @@
+stages:
+    - build
+    - deploy
+build:
+    stage: build
+    script:
+        - echo 'Building application'
+        - yarn install
+        - CI=false yarn build # CI=false to stop treating warnings as errors
+        - echo 'Build successful'
+    artifacts:
+        expire_in: 2 hrs
+        paths:
+            - build/
+    tags:
+        - gitlab#2
+deploy:
+    stage: deploy
+    script:
+        - echo 'Deploying application'
+        - cp -rv build/* $CI_DEPLOY_PATH
+        - echo 'Deployment successful'
+    environment:
+        name: production
+        url: $CI_DEPLOY_URL
+    only:
+        - main
+    tags:
+        - gitlab#2
