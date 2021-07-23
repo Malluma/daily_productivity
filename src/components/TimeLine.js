@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import DayLine from './DayLine'
 import Simple from './Simple'
 
@@ -75,15 +75,22 @@ const TimeLine = function ({ returnToAppMarkedIntervals }) {
 		})
 	}
 
-	function returnToTimeLineMarkedIntervals(day, markedIntervalsForDay) {
+	useEffect(() => {
+		console.log('useEffect markedIntervalsTL')
+		console.log(JSON.stringify(markedIntervalsTL))
+		//returnToAppMarkedIntervals(markedIntervals);
 
-		setMarkedIntervalsTL({ ...markedIntervalsTL, [day]: [...markedIntervalsForDay] })
-		console.log('markedIntervalsTL')
+	}, [markedIntervalsTL])
+
+	function returnToTimeLineMarkedIntervals(day, markedIntervalsForDay) {
+		
+		console.log('returnToTimeLineMarkedIntervals')
 		console.log(day)
 		console.log(markedIntervalsForDay)
+		console.log('returnToTimeLineMarkedIntervals PREV markedIntervalsTL')
 		console.log(JSON.stringify(markedIntervalsTL))
 
-		//returnToAppMarkedIntervals(markedIntervals);
+		setMarkedIntervalsTL({ ...markedIntervalsTL, [day]: [...markedIntervalsForDay] })
 	}
 
 	const returnToTimeLine = useCallback((numFromSimple) => {

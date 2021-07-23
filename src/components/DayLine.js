@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import DateInDayLine from './DateInDayLine.js'
 
 function DayLine({ returnToTimeLineMarkedIntervals, returnToAppMarkedIntervals, currentDayArray }) {
@@ -6,7 +6,16 @@ function DayLine({ returnToTimeLineMarkedIntervals, returnToAppMarkedIntervals, 
 	const [dayArray, setDayArray] = useState(currentDayArray)
 	let [markedIntervals, setMarkedIntervals] = useState([])
 
-	let newMarkedIntervals = []
+    const currentDay = dayArray[0]
+
+    useEffect(() => {
+        console.log('useEffect DayLine')
+        console.log(currentDay)
+        console.log(markedIntervals)
+        returnToTimeLineMarkedIntervals(currentDay, markedIntervals);
+       
+    }, [markedIntervals, currentDay])
+
 
 	return (<div className='dayline'>
 		{dayArray.map((el, i) => {
@@ -21,21 +30,13 @@ function DayLine({ returnToTimeLineMarkedIntervals, returnToAppMarkedIntervals, 
 				setMarkedIntervals(prev => {
 
 					if (prev.includes(i)) {
-						newMarkedIntervals = prev.filter(k => k !== i)
+						return prev.filter(k => k !== i)
 					}
 					else {
-						newMarkedIntervals = [...prev, i];
+						return [...prev, i];
 					}
-					console.log('DayLine')
-					console.log(newMarkedIntervals)
-					return newMarkedIntervals
-				})
 
-				console.log('current DAY!!!')
-				console.log(dayArray[0])
-				console.log(newMarkedIntervals)
-				returnToTimeLineMarkedIntervals(dayArray[0], newMarkedIntervals);
-
+				})		
 			}}>
 			</div>
 		})}
