@@ -1,146 +1,150 @@
 html {
-  font-size: 24px;
-  color: #393D3F;
+	font-size: 24px;
+	color: #393d3f;
 }
 
 .title {
-  font-size: 0.65em;
-  font-weight: bold;
-  margin: 0 auto;
-  padding: 3px;
-  color: #546A7B;
-  letter-spacing: 0.48em;
-  
+	font-size: 0.65em;
+	font-weight: bold;
+	margin: 0 auto;
+	padding: 3px;
+	color: #546a7b;
+	letter-spacing: 0.48em;
 }
 
 .datetime {
-  background-color:#546A7B;
-  color: white;
-  padding: 0.1em;
-  margin-bottom: 10px;
-  font-size: 0.65em;
-  border-radius: 0.4em;
-  
+	background-color: #546a7b;
+	color: white;
+	padding: 0.1em;
+	margin-bottom: 10px;
+	font-size: 0.65em;
+	border-radius: 0.4em;
 }
 
-.container{
-  display: flex;
+.container {
+	display: flex;
 }
 
 .setInterval {
-  display: flex;
-  flex-direction: column;
-  width: 30%;
-  max-width: 11.5rem;
-  margin: 0.5rem;
-  font-weight: bold;
+	display: flex;
+	flex-direction: column;
+	width: 30%;
+	max-width: 11.5rem;
+	margin: 0.5rem;
+	font-weight: bold;
 }
 
 .btn {
-  border-radius: 10px;
-  margin: 0.127rem;
-  padding: 0.5rem 0.3rem;
-  font-family: inherit;
-  cursor: pointer;
-  border: none;
+	border-radius: 10px;
+	margin: 0.127rem;
+	padding: 0.5rem 0.3rem;
+	font-family: inherit;
+	cursor: pointer;
+	border: none;
 }
 
-.btnActions{
-  font-size: 0.9rem;
+.btnActions {
+	font-size: 0.9rem;
 }
 
-.btn:hover{
-   filter: brightness(110%);
-   box-shadow: 5px 4px 0px rgba(19, 13, 13, 0.3);
+.btn:hover {
+	filter: brightness(110%);
+	box-shadow: 5px 4px 0px rgba(19, 13, 13, 0.3);
 }
 
 .getBtn {
-  margin: 0.115rem;
-  padding: 0.2rem 0.5rem;
-  font-size: 0.5rem;
+	margin: 0.115rem;
+	padding: 0.2rem 0.5rem;
+	font-size: 0.5rem;
 }
 
-.addEmptyDayBtn{
-  padding:0.4rem 0.5rem;
-  font-size: 1rem;
-  line-height:0.2rem;
-  vertical-align: center;
+.addEmptyDayBtn {
+	padding: 0.4rem 0.5rem;
+	font-size: 1rem;
+	line-height: 0.2rem;
+	vertical-align: center;
 }
 
 .work {
-  background-color: #B1CC74;
+	background-color: #b1cc74;
 }
 
-.study, .mentorship{
-  background-color: #DFF7B2;
+.study,
+.mentorship {
+	background-color: #dff7b2;
 }
 
-.eat, .routine, .sleep {
-  background-color: #829399;
-  background-color: #92BBC6;
+.eat,
+.routine,
+.sleep {
+	background-color: #829399;
+	background-color: #92bbc6;
 }
 
-.idle, .games-series {
-  background-color: #f6b4ae;
+.idle,
+.games-series {
+	background-color: #f6b4ae;
 }
 
 .button.btnType4 {
-  background-color:#62929E;
-  background-color: #92BBC6;
+	background-color: #62929e;
+	background-color: #92bbc6;
 }
 
-.hobby, .sport, .walk, .communicate {
-  background-color: #D0F4EA;
-  background-color: #C1EFE1;
-  
+.hobby,
+.sport,
+.walk,
+.communicate {
+	background-color: #d0f4ea;
+	background-color: #c1efe1;
 }
 
-.empty{
-  background-color:lightgray;
+.empty {
+	background-color: lightgray;
 }
 
 .halfHour {
-  width: 0.5rem;
-  height: 0.7rem;
-  margin: 0.025rem;
-  padding: 0.2rem;
-  caret-color: transparent;
+	width: 0.5rem;
+	height: 0.7rem;
+	margin: 0.025rem;
+	padding: 0.2rem;
+	caret-color: transparent;
 }
 
-.dayline{
-  display: flex;
+.dayline {
+	display: flex;
 }
 
-.dateOnTheDaylineReadOnly, .dateOnTheDaylineInput {
-  font-size: 0.6rem;
-  color: #393D3F;
-  margin: 0.025rem;
-  padding: 0.2rem 0rem 0rem 0.2rem;
-  background-color:lightgray;
-  letter-spacing: -1px;
+.dateOnTheDaylineReadOnly,
+.dateOnTheDaylineInput {
+	font-size: 0.6rem;
+	color: #393d3f;
+	margin: 0.025rem;
+	padding: 0.2rem 0rem 0rem 0.2rem;
+	background-color: lightgray;
+	letter-spacing: -1px;
 
-  border: none;
-  width: 5;
-  
+	border: none;
+	width: 5;
 }
 
 ::-webkit-calendar-picker-indicator {
-   filter: invert(1);
-  margin-left: 0;   
+	filter: invert(1);
+	margin-left: 0;
 }
 
-.marked{
-  background-color:lightskyblue;
+.marked {
+	background-color: lightskyblue;
 }
 
 .simple {
-  background-color: #f6b4ae;
-  width: 50%;
-  padding: 2em;
+	background-color: #f6b4ae;
+	width: 50%;
+	padding: 2em;
 }
 
 .simpleTL {
-  background-color:aquamarine;
-  width: 50%;
-  padding: 2em;
+	background-color: aquamarine;
+	width: 50%;
+	padding: 2em;
 }
