@@ -10,38 +10,30 @@ const TimeLine = function ({ returnToAppMarkedIntervals }) {
 
 	function createEmptyDayLine(isEmpty = true) {
 		const emptyDayLine = [];
-
 		for (let i = 0; i < 48; i++) {
 			emptyDayLine.push({ 'value': '' });
 		}
-
 		emptyDayLine.push(isEmpty);
-
 		return emptyDayLine;
 	}
 
 	function SplitArrByDayLines(arr) {
-
 		let result = [];
 		let dayLine = [...createEmptyDayLine(false)]
 		let prevDay = '';
 
 		for (let i = 0; i < arr.length; i++) {
-
 			const currentDay = arr[i].day
 			console.log(currentDay)
-
 			if (prevDay && currentDay !== prevDay) {
 				result.push([prevDay, ...dayLine]);
 				dayLine = [...createEmptyDayLine(false)]
 			}
-
 			dayLine[arr[i].minutes / 30].value = arr[i].value_;
 			prevDay = currentDay
 		}
 
 		result.push([prevDay, ...dayLine]);
-
 		return result;
 	}
 
@@ -75,20 +67,43 @@ const TimeLine = function ({ returnToAppMarkedIntervals }) {
 		})
 	}
 
+	// function supplimentMarkedIntervals(){
+
+	// 	const result = []
+
+	// 	for (let day in markedIntervalsTL) {
+	// 		console.log("supplimentMarkedIntervals")
+	// 		const dayArrayFromIntervalsList = intervalsList.find(el => {return (el[0] === day)})	
+	// 		console.log(dayArrayFromIntervalsList)
+
+
+	// 		markedIntervalsTL[day].forEach(element => {
+				
+	// 			const valueForDay = dayArrayFromIntervalsList.find((el, i) => i === element)
+	// 			result.push({ day: day, index: element, value: valueForDay})
+				
+	// 		});
+
+	// 	}
+	// 	console.log(result)
+	// 	return result;
+
+	// }
+
 	useEffect(() => {
 		console.log('useEffect markedIntervalsTL')
 		console.log(JSON.stringify(markedIntervalsTL))
-		//returnToAppMarkedIntervals(markedIntervals);
+		returnToAppMarkedIntervals(markedIntervalsTL);
 
 	}, [markedIntervalsTL])
 
 	function returnToTimeLineMarkedIntervals(day, markedIntervalsForDay) {
 		
-		console.log('returnToTimeLineMarkedIntervals')
-		console.log(day)
-		console.log(markedIntervalsForDay)
-		console.log('returnToTimeLineMarkedIntervals PREV markedIntervalsTL')
-		console.log(JSON.stringify(markedIntervalsTL))
+		// console.log('returnToTimeLineMarkedIntervals')
+		// console.log(day)
+		// console.log(markedIntervalsForDay)
+		//console.log('returnToTimeLineMarkedIntervals PREV markedIntervalsTL')
+		//console.log(JSON.stringify(markedIntervalsTL))
 
 		setMarkedIntervalsTL({ ...markedIntervalsTL, [day]: [...markedIntervalsForDay] })
 	}

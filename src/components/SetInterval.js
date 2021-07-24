@@ -1,16 +1,33 @@
 import React from 'react';
 
-function SetInterval(props) {
+function SetInterval({ intervalsForUpdate }) {
+
+	function getDateStr(day, minutes) {
+		let hoursStr = String(Math.trunc(minutes / 60));
+		hoursStr = `${(hoursStr.length === 1) ? '0' : ''}${hoursStr}`
+		let minStr = String(minutes % 60);
+		minStr = `${(minStr.length === 1) ? '0' : ''}${minStr}`
+		return `${day}%${hoursStr}:${minStr}:00`
+	}
+
 	function createNewInterval() {
-		const body = JSON.stringify({
-			value_: 'work',
-			from_: '2021-07-15%10:00:00',
-			to_: '2021-07-15%10:30:00',
-			user_id: '000001',
-		});
+
+		let body = [];
+		for (let day in intervalsForUpdate) {
+
+			intervalsForUpdate[day].forEach((i) => {
+				const minutesFrom = (i - 1) * 30;
+				body.push({
+					value_: 'work',
+					from_: getDateStr(day, minutesFrom),
+					to_: getDateStr(day, minutesFrom + 30),
+					user_id: '000001',
+				})
+			})
+		}
 
 		console.log('BODY!!!!');
-		console.log(body);
+		console.log(JSON.stringify(body));
 
 		fetch('http://localhost:3001/intervals', {
 			method: 'POST',
@@ -18,7 +35,7 @@ function SetInterval(props) {
 				Accept: 'application/json',
 				'Content-Type': 'application/json',
 			}),
-			body: body,
+			body: JSON.stringify(body),
 		})
 			.then((response) => response.json())
 			.then((json) => console.log(json))
@@ -32,8 +49,8 @@ function SetInterval(props) {
 			<button className="btn btnActions work" onClick={createNewInterval}>
 				WORK
 			</button>
-			<button className="btn btnActions mentorship">MENTORSHIP</button>
-			<button className="btn btnActions study">STUDY</button>
+			<button className="btn btnActions mentorship" onClick={() => { console.log('MENTORSHIP') }}>MENTORSHIP</button>
+			<button className="btn btnActions study" onClick={createNewInterval}>STUDY</button>
 			<button className="btn btnActions eat">EAT</button>
 			<button className="btn btnActions routine">ROUTINE</button>
 			<button className="btn btnActions idle">IDLE</button>

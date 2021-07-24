@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import '../App.css';
 import TimeLine from './TimeLine';
 import SetIntervals from './SetInterval';
@@ -8,16 +8,14 @@ function App() {
 
 	function returnToAppMarkedIntervals(value) {
 		setIntervalsForUpdate(value);
-		console.log('APP');
-		console.log(intervalsForUpdate);
 	}
 
 	return (
 		<div className="app">
 			<main>
 				<div className="container">
-					<SetIntervals value={intervalsForUpdate} />
-					<TimeLine callback={returnToAppMarkedIntervals} />
+					<SetIntervals intervalsForUpdate={intervalsForUpdate} />
+          <TimeLine returnToAppMarkedIntervals={returnToAppMarkedIntervals} />
 				</div>
 			</main>
 		</div>
