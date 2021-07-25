@@ -1,14 +1,7 @@
 import React from 'react';
+import { getDateStr } from '../utils/utils.js'
 
 function SetInterval({ intervalsForUpdate }) {
-
-	function getDateStr(day, minutes) {
-		let hoursStr = String(Math.trunc(minutes / 60));
-		hoursStr = `${(hoursStr.length === 1) ? '0' : ''}${hoursStr}`
-		let minStr = String(minutes % 60);
-		minStr = `${(minStr.length === 1) ? '0' : ''}${minStr}`
-		return `${day}%${hoursStr}:${minStr}:00`
-	}
 
 	function createNewInterval() {
 
@@ -25,9 +18,6 @@ function SetInterval({ intervalsForUpdate }) {
 				})
 			})
 		}
-
-		console.log('BODY!!!!');
-		console.log(JSON.stringify(body));
 
 		fetch('http://localhost:3001/intervals', {
 			method: 'POST',
