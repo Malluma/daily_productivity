@@ -9,11 +9,7 @@ function DayLine({ returnToTimeLineMarkedIntervals, returnToAppMarkedIntervals, 
     const currentDay = dayArray[0]
 
     useEffect(() => {
-        // console.log('useEffect DayLine')
-        // console.log(currentDay)
-        // console.log(markedIntervals)
-        returnToTimeLineMarkedIntervals(currentDay, markedIntervals);
-       
+        returnToTimeLineMarkedIntervals(currentDay, markedIntervals);     
     }, [markedIntervals, currentDay])
 
 

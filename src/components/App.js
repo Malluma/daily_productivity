@@ -15,7 +15,7 @@ function App() {
 			<main>
 				<div className="container">
 					<SetIntervals intervalsForUpdate={intervalsForUpdate} />
-          <TimeLine returnToAppMarkedIntervals={returnToAppMarkedIntervals} />
+          			<TimeLine returnToAppMarkedIntervals={returnToAppMarkedIntervals} />
 				</div>
 			</main>
 		</div>

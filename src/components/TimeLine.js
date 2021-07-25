@@ -1,41 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import DayLine from './DayLine'
-import Simple from './Simple'
+import { SplitArrByDayLines, createEmptyDayLine } from '../utils/utils.js'
 
 const TimeLine = function ({ returnToAppMarkedIntervals }) {
 
 	const [intervalsList, setIntervalsList] = useState([]);
 	const [markedIntervalsTL, setMarkedIntervalsTL] = useState({})
-	const [num_TL, setNum_TL] = useState(555);
-
-	function createEmptyDayLine(isEmpty = true) {
-		const emptyDayLine = [];
-		for (let i = 0; i < 48; i++) {
-			emptyDayLine.push({ 'value': '' });
-		}
-		emptyDayLine.push(isEmpty);
-		return emptyDayLine;
-	}
-
-	function SplitArrByDayLines(arr) {
-		let result = [];
-		let dayLine = [...createEmptyDayLine(false)]
-		let prevDay = '';
-
-		for (let i = 0; i < arr.length; i++) {
-			const currentDay = arr[i].day
-			console.log(currentDay)
-			if (prevDay && currentDay !== prevDay) {
-				result.push([prevDay, ...dayLine]);
-				dayLine = [...createEmptyDayLine(false)]
-			}
-			dayLine[arr[i].minutes / 30].value = arr[i].value_;
-			prevDay = currentDay
-		}
-
-		result.push([prevDay, ...dayLine]);
-		return result;
-	}
 
 	function getData() {
 		fetch(
@@ -46,13 +16,6 @@ const TimeLine = function ({ returnToAppMarkedIntervals }) {
 			.then(json => setIntervalsList(SplitArrByDayLines(json)))
 			.catch(error => console.error('error', error))
 
-	}
-
-	function formatDateToStr_ddmmyy(date) {
-		let curDay = String(date.getDate())
-		let curMonth = String(date.getMonth())
-		let curYear = String(date.getFullYear()).slice(2, 4)
-		return `${(curDay.length === 1) ? '0' + curDay : curDay}.${(curMonth.length === 1) ? '0' + curMonth : curMonth}.${curYear}`
 	}
 
 	Date.prototype.toDateInputValue = (function () {
@@ -67,29 +30,6 @@ const TimeLine = function ({ returnToAppMarkedIntervals }) {
 		})
 	}
 
-	// function supplimentMarkedIntervals(){
-
-	// 	const result = []
-
-	// 	for (let day in markedIntervalsTL) {
-	// 		console.log("supplimentMarkedIntervals")
-	// 		const dayArrayFromIntervalsList = intervalsList.find(el => {return (el[0] === day)})	
-	// 		console.log(dayArrayFromIntervalsList)
-
-
-	// 		markedIntervalsTL[day].forEach(element => {
-				
-	// 			const valueForDay = dayArrayFromIntervalsList.find((el, i) => i === element)
-	// 			result.push({ day: day, index: element, value: valueForDay})
-				
-	// 		});
-
-	// 	}
-	// 	console.log(result)
-	// 	return result;
-
-	// }
-
 	useEffect(() => {
 		console.log('useEffect markedIntervalsTL')
 		console.log(JSON.stringify(markedIntervalsTL))
@@ -98,19 +38,8 @@ const TimeLine = function ({ returnToAppMarkedIntervals }) {
 	}, [markedIntervalsTL])
 
 	function returnToTimeLineMarkedIntervals(day, markedIntervalsForDay) {
-		
-		// console.log('returnToTimeLineMarkedIntervals')
-		// console.log(day)
-		// console.log(markedIntervalsForDay)
-		//console.log('returnToTimeLineMarkedIntervals PREV markedIntervalsTL')
-		//console.log(JSON.stringify(markedIntervalsTL))
-
 		setMarkedIntervalsTL({ ...markedIntervalsTL, [day]: [...markedIntervalsForDay] })
 	}
-
-	const returnToTimeLine = useCallback((numFromSimple) => {
-		setNum_TL(numFromSimple)
-	})
 
 	return (<div className='intervals'>
 		<button className='btn getBtn' onClick={getData}>Update</button>
@@ -118,8 +47,6 @@ const TimeLine = function ({ returnToAppMarkedIntervals }) {
 			{intervalsList.map((day, j) => <DayLine key={j} lineIndex={j} currentDayArray={[...day]} returnToTimeLineMarkedIntervals={returnToTimeLineMarkedIntervals} returnToAppMarkedIntervals={returnToAppMarkedIntervals} />)}
 		</div>
 		<button className='btn addEmptyDayBtn' onClick={addEmptyDay}>+</button>
-		<Simple returnToTimeLine={returnToTimeLine} />
-		<div className='simpleTL'>{num_TL}</div>
 	</div>)
 }
 
