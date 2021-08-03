@@ -1,38 +1,30 @@
 import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import DateInDayLine from './DateInDayLine.js'
+import {addDelMarkedInterval} from '../store/actions';
 
-function DayLine({ returnToTimeLineMarkedIntervals, returnToAppMarkedIntervals, currentDayArray }) {
-
+function DayLine({ currentDayArray }) {
+	
 	const [dayArray, setDayArray] = useState(currentDayArray)
-	let [markedIntervals, setMarkedIntervals] = useState([])
-
-    const currentDay = dayArray[0]
-
-    useEffect(() => {
-        returnToTimeLineMarkedIntervals(currentDay, markedIntervals);     
-    }, [markedIntervals, currentDay])
-
+	const currentDay = dayArray[0]
+	let markedIntervalsForDay = useSelector(state => state.markedIntervals[currentDay])
+	const dispatch = useDispatch()
+	
+	if (! markedIntervalsForDay) {
+		markedIntervalsForDay = []
+	}
 
 	return (<div className='dayline'>
-		{dayArray.map((el, i) => {
+		{dayArray.map((el, index) => {
 
-			if (i === 0) {
-				return <DateInDayLine key={i} currentDay={el} emptyLine={dayArray[49]} />
+			if (index === 0) {
+				return <DateInDayLine key={index} currentDay={el} emptyLine={dayArray[49]} />
 			}
 
-			const className = `halfHour ${el.value ? el.value : ' empty'} ${markedIntervals.includes(i) ? ' marked' : ''}`
+			const className = `halfHour ${el.value ? el.value : ' empty'} ${markedIntervalsForDay.includes(index) ? ' marked' : ''}`
 
-			return <div key={i} className={className} readOnly onClick={(e) => {
-				setMarkedIntervals(prev => {
-
-					if (prev.includes(i)) {
-						return prev.filter(k => k !== i)
-					}
-					else {
-						return [...prev, i];
-					}
-
-				})		
+			return <div key={index} className={className} readOnly onClick={(e) => {
+				dispatch(addDelMarkedInterval({currentDay, index}))
 			}}>
 			</div>
 		})}

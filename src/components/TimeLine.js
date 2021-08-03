@@ -1,11 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import DayLine from './DayLine'
-import { SplitArrByDayLines, createEmptyDayLine, toDateInputValue } from '../utils/utils.js'
+import React from 'react';
+import DayLine from './DayLine.js'
+import { useSelector, useDispatch } from 'react-redux'
+import {addEmptyInterval, loadIntervalsFromDB} from '../store/actions';
 
-const TimeLine = function ({ returnToAppMarkedIntervals }) {
+const TimeLine = function (props) {
 
-	const [intervalsList, setIntervalsList] = useState([]);
-	const [markedIntervalsTL, setMarkedIntervalsTL] = useState({})
+	const intervals = useSelector(state => state.intervals);
+
+	console.log('TIMELINE! STORE.INTERVALS')
+	console.log(intervals)
+
+	const dispatch = useDispatch();
 
 	function getData() {
 		fetch(
@@ -13,33 +18,21 @@ const TimeLine = function ({ returnToAppMarkedIntervals }) {
 			{ method: 'GET' }
 		)
 			.then(response => response.json())
-			.then(json => setIntervalsList(SplitArrByDayLines(json)))
+			.then(json => 
+			{
+				console.log('dispatch');
+				dispatch(loadIntervalsFromDB(json))
+				})
 			.catch(error => console.error('error', error))
-	}
-
-	function addEmptyDay() {
-		setIntervalsList(prev => {
-			return [...prev, [toDateInputValue(new Date()), ...createEmptyDayLine()]]
-		})
-	}
-
-	useEffect(() => {
-		console.log('useEffect markedIntervalsTL')
-		console.log(JSON.stringify(markedIntervalsTL))
-		returnToAppMarkedIntervals(markedIntervalsTL);
-
-	}, [markedIntervalsTL])
-
-	function returnToTimeLineMarkedIntervals(day, markedIntervalsForDay) {
-		setMarkedIntervalsTL({ ...markedIntervalsTL, [day]: [...markedIntervalsForDay] })
 	}
 
 	return (<div className='intervals'>
 		<button className='btn getBtn' onClick={getData}>Update</button>
 		<div className='IntervalsTable'>
-			{intervalsList.map((day, j) => <DayLine key={j} lineIndex={j} currentDayArray={[...day]} returnToTimeLineMarkedIntervals={returnToTimeLineMarkedIntervals} returnToAppMarkedIntervals={returnToAppMarkedIntervals} />)}
+			{intervals.map((day, j) => <DayLine key={j} lineIndex={j} currentDayArray={[...day]} />)}
 		</div>
-		<button className='btn addEmptyDayBtn' onClick={addEmptyDay}>+</button>
+		< button className='btn addEmptyDayBtn' onClick={() => dispatch(addEmptyInterval())} > +</button >
+		
 	</div>)
 }
 
