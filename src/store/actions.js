@@ -24,11 +24,9 @@ export const clearMarkedIntervals = () => {
     }
 }
 
-export const addUpdatedIntervalsToState = () => {
+export const addUpdatedIntervalsToState = (activityType) => {
     return {
         type: "ADD_UPDATED_INTERVALS_TO_STATE",
+        payload: activityType
     }
 }
-
-
-//export default { loadIntervalsFromDB, addEmptyInterval, addDelMarkedInterval, clearMarkedIntervals }
