@@ -21,6 +21,10 @@ function DayLine({ currentDayArray }) {
 				return <DateInDayLine key={index} currentDay={el} emptyLine={dayArray[49]} />
 			}
 
+			if (index === 49) {
+				return ''
+			}
+
 			const className = `halfHour ${el.value ? el.value : ' empty'} ${markedIntervalsForDay.includes(index) ? ' marked' : ''}`
 
 			return <div key={index} className={className} readOnly onClick={(e) => {

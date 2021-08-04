@@ -2,7 +2,6 @@ import React from 'react';
 import { getDateStr } from '../utils/utils.js'
 import { useSelector, useDispatch } from 'react-redux'
 import { clearMarkedIntervals, addUpdatedIntervalsToState } from '../store/actions';
-import { act } from 'react-dom/cjs/react-dom-test-utils.production.min';
 
 function SetInterval() {
 
@@ -10,6 +9,8 @@ function SetInterval() {
 	const dispatch = useDispatch()
 
 	function createNewInterval(activityType) {
+
+		console.log('createNewInterval')
 
 		let body = [];
 		for (let day in intervalsForUpdate) {
@@ -34,20 +35,17 @@ function SetInterval() {
 			body: JSON.stringify(body),
 		})
 			.then((response) => response.json())
-			.then((json) => console.log(json))
+			.then((json) => console.log('intervals are added'))
 			.catch((error) => console.error('error', error));
-		
-		//dispatch(addUpdatedIntervalsToState())
+
+		dispatch(addUpdatedIntervalsToState(activityType))
 		dispatch(clearMarkedIntervals())
 	}
 
 	return (
 		<div className="setInterval">
 			<div className="title">Daily Productivity</div>
-			<div className="datetime">21.08.2020 11:30 - 12:00</div>
-			<button className="btn btnActions work" onClick={() => createNewInterval('work')}>
-				WORK
-			</button>
+			<button className="btn btnActions work" onClick={() => createNewInterval('work')}>WORK</button>
 			<button className="btn btnActions mentorship" onClick={() => createNewInterval('mentorship')}>MENTORSHIP</button>
 			<button className="btn btnActions study" onClick={() => createNewInterval('study')}>STUDY</button>
 			<button className="btn btnActions eat" onClick={() => createNewInterval('eat')}>EAT</button>
