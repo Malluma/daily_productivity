@@ -29,32 +29,45 @@ const reducer = (state = { intervals: [], markedIntervals: {} }, action) => {
             return { ...state, markedIntervals: {} }
         case "ADD_UPDATED_INTERVALS_TO_STATE":
             {
+                
+                const newIntervals = [...state.intervals]
+                // for (let i = 0; i < state.intervals.length; i++){
+                //     for(let j = 0; j < state.intervals[i].length; j++){
+                //     }
+                //     //newIntervals.push()
+                // }
+                
                 for (const dayInMarkedIntervals in state.markedIntervals) {
                     
                     let dayArrayInIntervals = []
+                    let dayIndexInIntervals = 0;
 
-                    for (let i = 0; i < state.intervals.length; i++) {
-                        if(state.intervals[i][0] === dayInMarkedIntervals) {
-                            dayArrayInIntervals = state.intervals[i]
+                    for (dayIndexInIntervals = 0; dayIndexInIntervals < state.intervals.length; dayIndexInIntervals++) {
+                        if (state.intervals[dayIndexInIntervals][0] === dayInMarkedIntervals) {
+                            //dayArrayInIntervals = state.intervals[dayIndexInIntervals]
+                            dayArrayInIntervals = [...state.intervals[dayIndexInIntervals]]
                             break;
                         }
                     }
 
-                    const dayArrayInMarkedIntervals = state.markedIntervals[dayInMarkedIntervals]
+                    const dayArrayInMarkedIntervals = state.markedIntervals[dayInMarkedIntervals]            
 
                     for (let i = 0; i < dayArrayInMarkedIntervals.length; i++){
                         for (let j = 0; j < dayArrayInIntervals.length; j++ ) {
                             if (j === dayArrayInMarkedIntervals[i]) {
-                                dayArrayInIntervals[j].value = action.payload;
+                                //dayArrayInIntervals[j].value = action.payload;
+                                dayArrayInIntervals[j] = {value: action.payload};
                             }
-
                         }
                     }
 
+                    newIntervals[dayIndexInIntervals] = dayArrayInIntervals
+
                 }
                 console.log('ADD_UPDATED_INTERVALS_TO_STATE')
-                console.log(state.intervals)
-                return { ...state}
+                console.log({ ...state, intervals: newIntervals })
+                console.log(state)
+                return { ...state, intervals: newIntervals}
             }
         default:
             return state
