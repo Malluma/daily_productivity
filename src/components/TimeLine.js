@@ -6,9 +6,11 @@ import {addEmptyInterval, loadIntervalsFromDB} from '../store/actions';
 const TimeLine = function (props) {
 
 	const intervals = useSelector(state => state.intervals);
+	let markedIntervalsForDay = useSelector(state => state.markedIntervals)
 
-	// console.log('TIMELINE! STORE.INTERVALS')
-	// console.log(intervals)
+	console.log('TIMELINE! STORE.INTERVALS')
+	console.log(markedIntervalsForDay)
+	console.log(intervals)
 
 	const dispatch = useDispatch();
 
@@ -28,7 +30,11 @@ const TimeLine = function (props) {
 
 	return (<div className='intervals'>
 		<button className='btn getBtn' onClick={getData}>Update</button>
-		<div className='IntervalsTable'>{intervals.map((day, j) => <DayLine key={j}  currentDayArray={[...day]} />)}
+		<div className='IntervalsTable'>{intervals.map((day, j) => {
+			//return <DayLine key={j}  currentDayArray={[...day]} dayIndex={j}/>}
+			return <DayLine key={j} dayIndex={j} />
+		}
+		)}
 		</div>
 		< button className='btn addEmptyDayBtn' onClick={() => dispatch(addEmptyInterval())} > +</button >
 		

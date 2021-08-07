@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import DateInDayLine from './DateInDayLine.js'
 import {addDelMarkedInterval} from '../store/actions';
 
-function DayLine({ currentDayArray }) {
+function DayLine(props) {
 	
-	const [dayArray, setDayArray] = useState(currentDayArray)
-	const currentDay = dayArray[0]
+	const currentDayArray = useSelector(state => state.intervals)[props.dayIndex];
+	const currentDay = currentDayArray[0]
 	let markedIntervalsForDay = useSelector(state => state.markedIntervals[currentDay])
 	const dispatch = useDispatch()
-	
+
 	if (! markedIntervalsForDay) {
 		markedIntervalsForDay = []
 	}
 
 	return (<div className='dayline'>
-		{dayArray.map((el, index) => {
+		{currentDayArray.map((el, index) => {
 
 			if (index === 0) {
-				return <DateInDayLine key={index} currentDay={el} emptyLine={dayArray[49]} />
+				return <DateInDayLine key={index} currentDay={el} emptyLine={currentDayArray[49]} />
 			}
 
 			if (index === 49) {
