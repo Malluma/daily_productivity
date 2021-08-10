@@ -9,6 +9,8 @@ export function createEmptyDayLine(isEmpty = true) {
 
 export function SplitArrByDayLines(arr) {
     let result = [];
+
+    if (arr.length) {
     let dayLine = [...createEmptyDayLine(false)]
     let prevDay = '';
 
@@ -24,6 +26,8 @@ export function SplitArrByDayLines(arr) {
     }
 
     result.push([prevDay, ...dayLine]);
+    }
+    
     return result;
 }
 

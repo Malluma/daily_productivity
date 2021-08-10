@@ -11,10 +11,10 @@ export const addEmptyInterval = () => {
     }
 }
 
-export const addDelMarkedInterval = ({currentDay, index}) => {
+export const addDelMarkedInterval = ({currentDay, index, value}) => {
     return {
         type: "ADD_DEL_MARKED_INTERVAL",
-        payload: { currentDay, index }
+        payload: { currentDay, index, value }
     }
 }
 
@@ -24,9 +24,9 @@ export const clearMarkedIntervals = () => {
     }
 }
 
-export const addUpdatedIntervalsToState = (activityType) => {
+export const addMarkedIntervalsToStateIntervals = (activityType) => {
     return {
-        type: "ADD_UPDATED_INTERVALS_TO_STATE",
+        type: "ADD_MARKED_INTERVALS_TO_STATE_INTERVALS",
         payload: activityType
     }
 }

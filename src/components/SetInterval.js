@@ -1,21 +1,25 @@
 import React from 'react';
 import { getDateStr } from '../utils/utils.js'
 import { useSelector, useDispatch } from 'react-redux'
-import { clearMarkedIntervals, addUpdatedIntervalsToState } from '../store/actions';
+import { clearMarkedIntervals, addMarkedIntervalsToStateIntervals } from '../store/actions';
 
 function SetInterval() {
 
-	let intervalsForUpdate = useSelector(state => state.markedIntervals)
+	let intervalsForUpdate = useSelector(state => state.markedIntervals_upd)
+	let intervalsForCreate = useSelector(state => state.markedIntervals_new)
 	const dispatch = useDispatch()
 
 	function createNewInterval(activityType) {
 
 		console.log('createNewInterval')
-
+		console.log(intervalsForCreate)
+		console.log(intervalsForUpdate)
+		
+		//CREATE INTERVALS
 		let body = [];
-		for (let day in intervalsForUpdate) {
+		for (let day in intervalsForCreate) {
 
-			intervalsForUpdate[day].forEach((i) => {
+			intervalsForCreate[day].forEach((i) => {
 				const minutesFrom = (i - 1) * 30;
 				body.push({
 					value_: activityType,
@@ -38,7 +42,34 @@ function SetInterval() {
 			.then((json) => console.log('intervals are added'))
 			.catch((error) => console.error('error', error));
 
-		dispatch(addUpdatedIntervalsToState(activityType))
+		//UPDATE INTERVALS
+		body = [];
+		for (let day in intervalsForUpdate) {
+
+			intervalsForUpdate[day].forEach((i) => {
+				const minutesFrom = (i - 1) * 30;
+				body.push({
+					value_: activityType,
+					from_: getDateStr(day, minutesFrom),
+					to_: getDateStr(day, minutesFrom + 30),
+					user_id: '000001',
+				})
+			})
+		}
+
+		fetch('http://localhost:3001/intervals', {
+			method: 'PUT',
+			headers: new Headers({
+				Accept: 'application/json',
+				'Content-Type': 'application/json',
+			}),
+			body: JSON.stringify(body),
+		})
+			.then((response) => response.json())
+			.then((json) => console.log('intervals are updated'))
+			.catch((error) => console.error('error', error));
+
+		dispatch(addMarkedIntervalsToStateIntervals(activityType))
 		dispatch(clearMarkedIntervals())
 	}
 

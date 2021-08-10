@@ -7,12 +7,17 @@ function DayLine(props) {
 	
 	const currentDayArray = useSelector(state => state.intervals)[props.dayIndex];
 	const currentDay = currentDayArray[0]
-	let markedIntervalsForDay = useSelector(state => state.markedIntervals[currentDay])
-	const dispatch = useDispatch()
 
-	if (! markedIntervalsForDay) {
-		markedIntervalsForDay = []
+	let markedIntervalsForDay_new = useSelector(state => state.markedIntervals_new[currentDay])
+	if (!markedIntervalsForDay_new) {
+		markedIntervalsForDay_new = []
 	}
+	let markedIntervalsForDay_upd = useSelector(state => state.markedIntervals_upd[currentDay])
+	if (!markedIntervalsForDay_upd) {
+		markedIntervalsForDay_upd= []
+	}
+	const markedIntervalsForDay = markedIntervalsForDay_new.concat(markedIntervalsForDay_upd)
+	const dispatch = useDispatch()
 
 	return (<div className='dayline'>
 		{currentDayArray.map((el, index) => {
@@ -28,7 +33,7 @@ function DayLine(props) {
 			const className = `halfHour ${el.value ? el.value : ' empty'} ${markedIntervalsForDay.includes(index) ? ' marked' : ''}`
 
 			return <div key={index} className={className} readOnly onClick={(e) => {
-				dispatch(addDelMarkedInterval({currentDay, index}))
+				dispatch(addDelMarkedInterval({currentDay, index, value: el.value}))
 			}}>
 			</div>
 		})}
