@@ -1,5 +1,6 @@
 import React from 'react';
 import DayLine from './DayLine.js'
+import DayLineHeader from './DayLineHeader.js'
 import { useSelector, useDispatch } from 'react-redux'
 import {addEmptyInterval, loadIntervalsFromDB} from '../store/actions';
 
@@ -24,7 +25,9 @@ const TimeLine = function (props) {
 
 	return (<div className='intervals'>
 		<button className='btn getBtn' onClick={getData}>Update</button>
-		<div className='IntervalsTable'>{intervals.map((day, j) => {
+		<div className='IntervalsTable'>
+			<DayLineHeader />
+			{intervals.map((day, j) => {
 			return <DayLine key={j} dayIndex={j} />
 		}
 		)}

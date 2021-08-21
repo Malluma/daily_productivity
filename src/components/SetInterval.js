@@ -57,7 +57,7 @@ function SetInterval() {
 			})
 		}
 
-		fetch('http://localhost:3001/intervals', {
+		fetch('http://localhost:3001/intervals/update', {
 			method: 'PUT',
 			headers: new Headers({
 				Accept: 'application/json',

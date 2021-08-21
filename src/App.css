@@ -111,8 +111,20 @@ html {
 	caret-color: transparent;
 }
 
+.unevenSquare{
+	margin-left: 0;
+	padding-left: 0;	
+}
+
+.evenSquare{
+	margin-right: 0;
+	padding-right: 0;
+}
+
 .dayline {
 	display: flex;
+	font-size: 0.5rem;
+	letter-spacing: -2;
 }
 
 .dateOnTheDaylineReadOnly,
@@ -123,9 +135,19 @@ html {
 	padding: 0.2rem 0rem 0rem 0.2rem;
 	background-color: lightgray;
 	letter-spacing: -1px;
-
 	border: none;
 	width: 5;
+}
+
+.dateOnTheDaylineInputHeader{
+	width: 5.3rem;
+	align-content: center;
+	background-color: lightgray;
+	display: grid;
+	align-items: center;
+	justify-content: center;
+	border-top-left-radius : 0.4em;
+	letter-spacing: 3px;
 }
 
 ::-webkit-calendar-picker-indicator {
@@ -137,14 +159,3 @@ html {
 	background-color: lightskyblue;
 }
 
-.simple {
-	background-color: #f6b4ae;
-	width: 50%;
-	padding: 2em;
-}
-
-.simpleTL {
-	background-color: aquamarine;
-	width: 50%;
-	padding: 2em;
-}

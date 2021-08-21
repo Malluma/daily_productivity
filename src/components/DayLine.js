@@ -18,6 +18,9 @@ function DayLine(props) {
 	}
 	const markedIntervalsForDay = markedIntervalsForDay_new.concat(markedIntervalsForDay_upd)
 	const dispatch = useDispatch()
+	
+	console.log('DayLine')
+	console.log(currentDay)
 
 	return (<div className='dayline'>
 		{currentDayArray.map((el, index) => {
@@ -30,7 +33,7 @@ function DayLine(props) {
 				return ''
 			}
 
-			const className = `halfHour ${el.value ? el.value : ' empty'} ${markedIntervalsForDay.includes(index) ? ' marked' : ''}`
+			const className = `halfHour ${el.value ? el.value : ' empty'} ${markedIntervalsForDay.includes(index) ? ' marked' : ''} ${index%2 === 0 ? 'unevenSquare': 'evenSquare'}`
 
 			return <div key={index} className={className} readOnly onClick={(e) => {
 				dispatch(addDelMarkedInterval({currentDay, index, value: el.value}))
