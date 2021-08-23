@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+import { setSelectedDate } from '../store/actions';
 
-function DateInDayLine({ currentDay, emptyLine }) {
-    let [day, setDay] = useState(currentDay);
+function DateInDayLine({ dayIndex, currentDay, emptyLine }) {
+    
+    const dispatch = useDispatch()
 
     return (
         <input
             className="dateOnTheDaylineInput"
             type="date"
-            value={day}
+            value={currentDay}
             onChange={(event) => {
-                setDay(event.target.value);
+                dispatch(setSelectedDate({ dayIndex: dayIndex, selectedDate: event.target.value }))     
             }}
             readOnly={!emptyLine}
         />

@@ -11,6 +11,14 @@ export const addEmptyInterval = () => {
     }
 }
 
+export const setSelectedDate = (payload) => {
+    return {
+        type: "SET_SELECTED_DATE",
+        payload: payload
+
+    }
+}
+
 export const addDelMarkedInterval = ({currentDay, index, value}) => {
     return {
         type: "ADD_DEL_MARKED_INTERVAL",

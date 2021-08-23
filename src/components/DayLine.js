@@ -18,15 +18,12 @@ function DayLine(props) {
 	}
 	const markedIntervalsForDay = markedIntervalsForDay_new.concat(markedIntervalsForDay_upd)
 	const dispatch = useDispatch()
-	
-	console.log('DayLine')
-	console.log(currentDay)
 
 	return (<div className='dayline'>
 		{currentDayArray.map((el, index) => {
 
 			if (index === 0) {
-				return <DateInDayLine key={index} currentDay={el} emptyLine={currentDayArray[49]} />
+				return <DateInDayLine key={index} dayIndex={props.dayIndex} currentDay={el} emptyLine={currentDayArray[49]} />
 			}
 
 			if (index === 49) {

@@ -34,6 +34,18 @@ const reducer = (state = { intervals: [], markedIntervals_new: {}, markedInterva
             return { ...state, intervals: SplitArrByDayLines(action.payload) }
         case "ADD_EMPTY_INTERVAL":
             return { ...state, intervals: [...state.intervals, [toDateInputValue(new Date()), ...createEmptyDayLine()]] }
+        case "SET_SELECTED_DATE":
+            let newIntervals = []
+            for (let i=0; i<state.intervals.length; i++){
+                if(i === action.payload.dayIndex) {
+                    const newDayLine = [...state.intervals[i]]
+                    newDayLine[0] = action.payload.selectedDate
+                    newIntervals.push(newDayLine)
+                }else {
+                    newIntervals.push([...state.intervals[i]])
+                }
+            }
+            return { ...state, intervals: newIntervals }
         case "ADD_DEL_MARKED_INTERVAL":
             {   
                 const { index, currentDay, value } = action.payload   
