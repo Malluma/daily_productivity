@@ -21,7 +21,7 @@ export function SplitArrByDayLines(arr) {
             result.push([prevDay, ...dayLine]);
             dayLine = [...createEmptyDayLine(false)]
         }
-        dayLine[arr[i].minutes / 30].value = arr[i].value_;
+        dayLine[arr[i].minutes / 30].value = arr[i].activity_type;
         prevDay = currentDay
     }
 
