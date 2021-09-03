@@ -19,10 +19,10 @@ export const setSelectedDate = (payload) => {
     }
 }
 
-export const addDelMarkedInterval = ({currentDay, index, value}) => {
+export const addDelMarkedInterval = ({ currentDay, index, activityType}) => {
     return {
         type: "ADD_DEL_MARKED_INTERVAL",
-        payload: { currentDay, index, value }
+        payload: { currentDay, index, activityType }
     }
 }
 

@@ -1,4 +1,4 @@
-export function createEmptyDayLine(isEmpty = true) {
+/*export function createEmptyDayLine(isEmpty = true) {prev
     const emptyDayLine = [];
     for (let i = 0; i < 48; i++) {
         emptyDayLine.push({ 'value': '' });
@@ -28,6 +28,47 @@ export function SplitArrByDayLines(arr) {
     result.push([prevDay, ...dayLine]);
     }
     
+    return result;
+}*/
+
+export function createEmptyDayLine() {
+    const emptyDayLine = [];
+    
+    for (let i = 0; i < 48; i++) {
+        emptyDayLine.push('');
+    }
+   
+    return emptyDayLine;
+}
+
+export function createDayObj(currentDate, dayLine, isEmpty = false) {
+    return {
+        date: currentDate,
+        dayIntervals: dayLine,
+        isEmpty: isEmpty
+    };
+}
+
+export function SplitArrByDayLines(arr) {
+    let result = [];
+
+    if (arr.length) {
+        let dayLine = createEmptyDayLine()
+        let prevDay = '';
+
+        for (let i = 0; i < arr.length; i++) {
+            const currentDay = arr[i].day
+            if (prevDay && currentDay !== prevDay) {
+                result.push(createDayObj(prevDay, dayLine))
+                dayLine = createEmptyDayLine()
+            }
+            dayLine[arr[i].minutes / 30] = arr[i].activity_type;
+            prevDay = currentDay
+        }
+
+        result.push(createDayObj(prevDay, dayLine))
+    }
+
     return result;
 }
 

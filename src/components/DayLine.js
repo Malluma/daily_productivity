@@ -5,8 +5,8 @@ import {addDelMarkedInterval} from '../store/actions';
 
 function DayLine(props) {
 	
-	const currentDayArray = useSelector(state => state.intervals)[props.dayIndex];
-	const currentDay = currentDayArray[0]
+	const currentDayObj = useSelector(state => state.intervals)[props.dayIndex];
+	const currentDay = currentDayObj.date;
 
 	let markedIntervalsForDay_new = useSelector(state => state.markedIntervals_new[currentDay])
 	if (!markedIntervalsForDay_new) {
@@ -20,21 +20,14 @@ function DayLine(props) {
 	const dispatch = useDispatch()
 
 	return (<div className='dayline'>
-		{currentDayArray.map((el, index) => {
-
-			if (index === 0) {
-				return <DateInDayLine key={index} dayIndex={props.dayIndex} currentDay={el} emptyLine={currentDayArray[49]} />
-			}
-
-			if (index === 49) {
-				return ''
-			}
-
-			const className = `halfHour ${el.value ? el.value : ' empty'} ${markedIntervalsForDay.includes(index) ? ' marked' : ''} ${index%2 === 0 ? 'unevenSquare': 'evenSquare'}`
-
-			return <div key={index} className={className} readOnly onClick={(e) => {
-				dispatch(addDelMarkedInterval({currentDay, index, value: el.value}))
-			}}>
+				<DateInDayLine dayIndex={props.dayIndex} currentDay={currentDay} emptyLine={currentDayObj.isEmpty} />
+				
+				{currentDayObj.dayIntervals.map((activityType, index) => {
+					const className = `halfHour ${activityType ? activityType : ' empty'} ${markedIntervalsForDay.includes(index) ? ' marked' : ''} ${index%2 === 0 ? 'evenSquare': 'unevenSquare'}`
+					return <div key={index} className={className} readOnly onClick={(e) => {
+						dispatch(addDelMarkedInterval({ currentDay, index, activityType}))
+					}
+				}>
 			</div>
 		})}
 

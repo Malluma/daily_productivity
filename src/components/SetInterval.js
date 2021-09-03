@@ -20,7 +20,7 @@ function SetInterval() {
 		for (let day in intervalsForCreate) {
 
 			intervalsForCreate[day].forEach((i) => {
-				const minutesFrom = (i - 1) * 30;
+				const minutesFrom = i * 30;
 				body.push({
 					activity_type: activityType,
 					interval_start: getDateStr(day, minutesFrom),
@@ -46,7 +46,7 @@ function SetInterval() {
 		for (let day in intervalsForUpdate) {
 
 			intervalsForUpdate[day].forEach((i) => {
-				const minutesFrom = (i - 1) * 30;
+				const minutesFrom = i * 30;
 				body.push({
 					activity_type: activityType,
 					interval_start: getDateStr(day, minutesFrom),
