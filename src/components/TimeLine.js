@@ -2,11 +2,11 @@ import React from 'react';
 import DayLine from './DayLine.js'
 import DayLineHeader from './DayLineHeader.js'
 import { useSelector, useDispatch } from 'react-redux'
-import {addEmptyInterval, loadIntervalsFromDB} from '../store/actions';
+import { addEmptyDay, loadProductivityDaysFromDB} from '../store/actions';
 
 const TimeLine = function (props) {
 
-	const intervals = useSelector(state => state.intervals);
+	const productivityDays = useSelector(state => state.days);
 
 	// console.log('TIMELINE! STORE.INTERVALS')
 	// console.log(intervals)
@@ -19,7 +19,7 @@ const TimeLine = function (props) {
 			{ method: 'GET' }
 		)
 			.then(response => response.json())
-			.then(json => dispatch(loadIntervalsFromDB(json)))
+			.then(json => dispatch(loadProductivityDaysFromDB(json)))
 			.catch(error => console.error('error', error))
 	}
 
@@ -27,12 +27,12 @@ const TimeLine = function (props) {
 		<button className='btn getBtn' onClick={getData}>Update</button>
 		<div className='IntervalsTable'>
 			<DayLineHeader />
-			{intervals.map((day, j) => {
+			{productivityDays.map((day, j) => {
 			return <DayLine key={j} dayIndex={j} />
 		}
 		)}
 		</div>
-		< button className='btn addEmptyDayBtn' onClick={() => dispatch(addEmptyInterval())} > +</button >
+		< button className='btn addEmptyDayBtn' onClick={() => dispatch(addEmptyDay())} > +</button >
 		
 	</div>)
 }

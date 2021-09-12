@@ -1,7 +1,7 @@
 import React from 'react';
 import { getDateStr } from '../utils/utils.js'
 import { useSelector, useDispatch } from 'react-redux'
-import { clearMarkedIntervals, addMarkedIntervalsToStateIntervals } from '../store/actions';
+import { clearMarkedIntervals, addMarkedIntervalsToDays } from '../store/actions';
 
 function SetInterval() {
 
@@ -67,7 +67,7 @@ function SetInterval() {
 			.then((json) => console.log('intervals are updated'))
 			.catch((error) => console.error('error', error));
 
-		dispatch(addMarkedIntervalsToStateIntervals(activityType))
+		dispatch(addMarkedIntervalsToDays(activityType))
 		dispatch(clearMarkedIntervals())
 	}
 

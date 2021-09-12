@@ -1,13 +1,13 @@
-export const loadIntervalsFromDB = (intervalsFromDB) => {
+export const loadProductivityDaysFromDB = (productivityDaysFromDB) => {
     return {
-        type: "LOAD_INTERVALS_FROM_DB",
-        payload: intervalsFromDB
+        type: "LOAD_PRODUCTIVITY_DAYS_FROM_DB",
+        payload: productivityDaysFromDB
     }
 }
 
-export const addEmptyInterval = () => {
+export const addEmptyDay = () => {
     return {
-        type: "ADD_EMPTY_INTERVAL"
+        type: "ADD_EMPTY_DAY"
     }
 }
 
@@ -32,9 +32,9 @@ export const clearMarkedIntervals = () => {
     }
 }
 
-export const addMarkedIntervalsToStateIntervals = (activityType) => {
+export const addMarkedIntervalsToDays = (activityType) => {
     return {
-        type: "ADD_MARKED_INTERVALS_TO_STATE_INTERVALS",
+        type: "ADD_MARKED_INTERVALS_TO_DAYS",
         payload: activityType
     }
 }

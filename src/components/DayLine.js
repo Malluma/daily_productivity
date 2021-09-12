@@ -5,7 +5,7 @@ import {addDelMarkedInterval} from '../store/actions';
 
 function DayLine(props) {
 	
-	const currentDayObj = useSelector(state => state.intervals)[props.dayIndex];
+	const currentDayObj = useSelector(state => state.days)[props.dayIndex];
 	const currentDay = currentDayObj.date;
 
 	let markedIntervalsForDay_new = useSelector(state => state.markedIntervals_new[currentDay])

@@ -1,60 +1,54 @@
 import { SplitArrByDayLines, createEmptyDayLine, createDayObj, toDateInputValue } from '../utils/utils.js'
 
-function addMarkedIntervalsToIntervals(markedIntervals, newIntervals, activityType){
+function addMarkedIntervalsToDays(markedIntervals, newDays, activityType){
 
     for (const dayInMarkedIntervals in markedIntervals) {
 
-        let dayObjInIntervals = {}
-        let dayArrayInIntervals = []
-        let dayIndexInIntervals = 0
+        let dayObjInDays = {}
+        let dayIntervalsInDays = []
+        let dayIndexInDays = 0
 
-        for (dayIndexInIntervals = 0; dayIndexInIntervals < newIntervals.length; dayIndexInIntervals++) {
-          if (newIntervals[dayIndexInIntervals].date === dayInMarkedIntervals) {
+        for (dayIndexInDays = 0; dayIndexInDays < newDays.length; dayIndexInDays++) {
+          if (newDays[dayIndexInDays].date === dayInMarkedIntervals) {
                 
-                //dayArrayInIntervals = [...newIntervals[dayIndexInIntervals]]
-                dayObjInIntervals = newIntervals[dayIndexInIntervals]
-                dayArrayInIntervals = [...dayObjInIntervals.dayIntervals]
+                dayObjInDays = newDays[dayIndexInDays]
+                dayIntervalsInDays = [...dayObjInDays.dayIntervals]
                 break;
             }
         }
         
         const dayArrayInMarkedIntervals = markedIntervals[dayInMarkedIntervals]
         for (let i = 0; i < dayArrayInMarkedIntervals.length; i++) {
-            for (let j = 0; j < dayArrayInIntervals.length; j++) {
+            for (let j = 0; j < dayIntervalsInDays.length; j++) {
                 if (j === dayArrayInMarkedIntervals[i]) {
-                    dayArrayInIntervals[j] = activityType
+                    dayIntervalsInDays[j] = activityType
 
                 }
             }
         }
 
-        newIntervals[dayIndexInIntervals] = {...dayObjInIntervals, dayIntervals: dayArrayInIntervals}
+        newDays[dayIndexInDays] = {...dayObjInDays, dayIntervals: dayIntervalsInDays}
     }
 }
 
-const reducer = (state = { intervals: [], markedIntervals_new: {}, markedIntervals_upd: {} }, action) => {
+const reducer = (state = { days: [], markedIntervals_new: {}, markedIntervals_upd: {} }, action) => {
     switch (action.type) {
-        //+
-        case "LOAD_INTERVALS_FROM_DB":
-            return { ...state, intervals: SplitArrByDayLines(action.payload) }
-        //+
-        case "ADD_EMPTY_INTERVAL":
-            //return { ...state, intervals: [...state.intervals, [toDateInputValue(new Date()), ...createEmptyDayLine()]] }  
-            return { ...state, intervals: [...state.intervals, createDayObj(toDateInputValue(new Date()), createEmptyDayLine(), true)] }
-        //+
+        case "LOAD_PRODUCTIVITY_DAYS_FROM_DB":
+            return { ...state, days: SplitArrByDayLines(action.payload) }
+        case "ADD_EMPTY_DAY":
+            return { ...state, days: [...state.days, createDayObj(toDateInputValue(new Date()), createEmptyDayLine(), true)] }
         case "SET_SELECTED_DATE":
-            let newIntervals = []
+            let newDays = []
         
-            for (let i=0; i<state.intervals.length; i++){
+            for (let i=0; i<state.days.length; i++){
             
                 if(i === action.payload.dayIndex) {
-                    newIntervals.push({ ...state.intervals[i], date: action.payload.selectedDate })
+                    newDays.push({ ...state.days[i], date: action.payload.selectedDate })
                 }else {
-                    newIntervals.push({...state.intervals[i]})
+                    newDays.push({...state.days[i]})
                 }
             }
-            return { ...state, intervals: newIntervals }
-        //+
+            return { ...state, days: newDays }
         case "ADD_DEL_MARKED_INTERVAL":
             {   
                 const { index, currentDay, activityType } = action.payload
@@ -86,16 +80,15 @@ const reducer = (state = { intervals: [], markedIntervals_new: {}, markedInterva
             }
         case "CLEAR_MARKED_INTERVALS":
             return { ...state, markedIntervals_new: {}, markedIntervals_upd: {} }
-
-        case "ADD_MARKED_INTERVALS_TO_STATE_INTERVALS":
+        case "ADD_MARKED_INTERVALS_TO_DAYS":
             {
-                const newIntervals = [...state.intervals]
+                const newDays = [...state.days]
                 const activityType = action.payload
 
-                addMarkedIntervalsToIntervals(state.markedIntervals_new, newIntervals, activityType)
-                addMarkedIntervalsToIntervals(state.markedIntervals_upd, newIntervals, activityType)        
+                addMarkedIntervalsToDays(state.markedIntervals_new, newDays, activityType)
+                addMarkedIntervalsToDays(state.markedIntervals_upd, newDays, activityType)        
 
-                return { ...state, intervals: newIntervals }
+                return { ...state, days: newDays }
             }
         default: return state
     }
