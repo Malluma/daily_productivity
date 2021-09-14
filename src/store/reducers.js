@@ -52,6 +52,7 @@ const reducer = (state = { days: [], markedIntervals_new: {}, markedIntervals_up
         case "ADD_DEL_MARKED_INTERVAL":
             {   
                 const { index, currentDay, activityType } = action.payload
+                console.log(`ADD_DEL_MARKED_INTERVAL ${index}`)
                 let markedIntervalsForDay = []
 
                 if (activityType) {
@@ -77,6 +78,37 @@ const reducer = (state = { days: [], markedIntervals_new: {}, markedIntervals_up
                 } else {
                     return { ...state, markedIntervals_new: { ...state.markedIntervals_new, [currentDay]: newMarkedIntervals } }
                 }      
+            }
+        case "ADD_MARKED_INTERVAL":
+            {
+                const { index, currentDay, activityType } = action.payload
+                console.log(`ADD_MARKED_INTERVAL ${index}`)
+    
+                let markedIntervalsForDay = []
+
+                if (activityType) {
+                    markedIntervalsForDay = state.markedIntervals_upd[currentDay]
+                } else {
+                    markedIntervalsForDay = state.markedIntervals_new[currentDay]
+                }
+
+                if (!markedIntervalsForDay) {
+                    markedIntervalsForDay = [];
+                }
+
+                let newMarkedIntervals = [];
+                if (markedIntervalsForDay.includes(index)) {
+                    //newMarkedIntervals = [...markedIntervalsForDay.filter(k => k !== index)]
+                }
+                else {
+                    newMarkedIntervals = [...markedIntervalsForDay, index];
+                }
+
+                if (activityType) {
+                    return { ...state, markedIntervals_upd: { ...state.markedIntervals_upd, [currentDay]: newMarkedIntervals } }
+                } else {
+                    return { ...state, markedIntervals_new: { ...state.markedIntervals_new, [currentDay]: newMarkedIntervals } }
+                }
             }
         case "CLEAR_MARKED_INTERVALS":
             return { ...state, markedIntervals_new: {}, markedIntervals_upd: {} }
