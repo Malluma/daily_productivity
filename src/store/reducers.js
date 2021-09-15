@@ -34,7 +34,7 @@ function addMarkedIntervalsToDays(markedIntervals, newDays, activityType){
 const reducer = (state = { days: [], markedIntervals_new: {}, markedIntervals_upd: {} }, action) => {
     switch (action.type) {
         case "LOAD_PRODUCTIVITY_DAYS_FROM_DB":
-            return { ...state, days: SplitArrByDayLines(action.payload) }
+            return { ...state, days: SplitArrByDayLines(action.payload), markedIntervals_new: {}, markedIntervals_upd: {} }
         case "ADD_EMPTY_DAY":
             return { ...state, days: [...state.days, createDayObj(toDateInputValue(new Date()), createEmptyDayLine(), true)] }
         case "SET_SELECTED_DATE":
@@ -82,7 +82,7 @@ const reducer = (state = { days: [], markedIntervals_new: {}, markedIntervals_up
         case "ADD_MARKED_INTERVAL":
             {
                 const { index, currentDay, activityType } = action.payload
-                console.log(`ADD_MARKED_INTERVAL ${index}`)
+                console.log(`ADD_MARKED_INTERVAL ${index} ${activityType} ${currentDay}`)
     
                 let markedIntervalsForDay = []
 
@@ -96,17 +96,24 @@ const reducer = (state = { days: [], markedIntervals_new: {}, markedIntervals_up
                     markedIntervalsForDay = [];
                 }
 
+                console.log(`markedIntervalsForDay: ${markedIntervalsForDay}`)
+
                 let newMarkedIntervals = [];
                 if (markedIntervalsForDay.includes(index)) {
                     //newMarkedIntervals = [...markedIntervalsForDay.filter(k => k !== index)]
+                    newMarkedIntervals = [...markedIntervalsForDay]
                 }
                 else {
                     newMarkedIntervals = [...markedIntervalsForDay, index];
                 }
 
                 if (activityType) {
+                    console.log(`UPD:`)
+                    console.log(newMarkedIntervals)
                     return { ...state, markedIntervals_upd: { ...state.markedIntervals_upd, [currentDay]: newMarkedIntervals } }
                 } else {
+                    console.log(`NEW:`)
+                    console.log(newMarkedIntervals)
                     return { ...state, markedIntervals_new: { ...state.markedIntervals_new, [currentDay]: newMarkedIntervals } }
                 }
             }

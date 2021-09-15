@@ -25,7 +25,7 @@ const TimeLine = function (props) {
 
 	return (<div className='intervals'>
 		<button className='btn getBtn' onClick={getData}>Update</button>
-		<div className='IntervalsTable'>
+		<div className='intervalsTable'>
 			<DayLineHeader />
 			{productivityDays.map((day, j) => {
 			return <DayLine key={j} dayIndex={j} />
