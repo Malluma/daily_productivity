@@ -18,8 +18,12 @@ function App(props) {
 		} 
 	}
 
+	function removeContextMenu(e) {
+		e.preventDefault();
+	}
+
 	return (
-		<div className="container" onClick={deselectIntervals}>
+		<div className="container" onClick={deselectIntervals} onContextMenu={removeContextMenu}>
 			<SetIntervals />
 			<TimeLine />
 		</div>

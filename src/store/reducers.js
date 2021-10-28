@@ -49,10 +49,14 @@ const reducer = (state = { days: [], markedIntervals_new: {}, markedIntervals_up
                 }
             }
             return { ...state, days: newDays }
-        case "ADD_DEL_MARKED_INTERVAL":
+        case "ADD_DEL_MARKED_INTERVAL"://for single selection
             {   
-                const { index, currentDay, activityType } = action.payload
-                console.log(`ADD_DEL_MARKED_INTERVAL ${index}`)
+                const { index, currentDay, activityType, selectPairedIntervals } = action.payload
+                let pairedIndex = 999;
+                if (selectPairedIntervals) {
+                    pairedIndex = (index%2 === 0) ? index + 1 : index - 1
+                }
+               
                 let markedIntervalsForDay = []
 
                 if (activityType) {
@@ -66,11 +70,11 @@ const reducer = (state = { days: [], markedIntervals_new: {}, markedIntervals_up
                 }
 
                 let newMarkedIntervals = [];
-                if (markedIntervalsForDay.includes(index)) {                   
-                    newMarkedIntervals = [...markedIntervalsForDay.filter(k => k !== index)]
+                if (markedIntervalsForDay.includes(index) || markedIntervalsForDay.includes(pairedIndex)) {
+                    newMarkedIntervals = [...markedIntervalsForDay.filter(k => k !== index && k !== pairedIndex)]
                 }
                 else {        
-                    newMarkedIntervals = [...markedIntervalsForDay, index];
+                    newMarkedIntervals = [...markedIntervalsForDay, index, pairedIndex];
                 }
 
                 if (activityType) {
@@ -79,7 +83,7 @@ const reducer = (state = { days: [], markedIntervals_new: {}, markedIntervals_up
                     return { ...state, markedIntervals_new: { ...state.markedIntervals_new, [currentDay]: newMarkedIntervals } }
                 }      
             }
-        case "ADD_MARKED_INTERVAL":
+        case "ADD_MARKED_INTERVAL"://for multiple selection
             {
                 const { index, currentDay, activityType } = action.payload
                 console.log(`ADD_MARKED_INTERVAL ${index} ${activityType} ${currentDay}`)
@@ -100,7 +104,6 @@ const reducer = (state = { days: [], markedIntervals_new: {}, markedIntervals_up
 
                 let newMarkedIntervals = [];
                 if (markedIntervalsForDay.includes(index)) {
-                    //newMarkedIntervals = [...markedIntervalsForDay.filter(k => k !== index)]
                     newMarkedIntervals = [...markedIntervalsForDay]
                 }
                 else {

@@ -25,11 +25,11 @@ function DayLine(props) {
 				
 				{currentDayObj.dayIntervals.map((activityType, index) => {
 					const className = `halfHour ${activityType ? activityType : ' empty'} ${markedIntervalsForDay.includes(index) ? ' marked' : ''} ${index%2 === 0 ? 'evenSquare': 'unevenSquare'}`
-					return <div key={index} className={className} readOnly onClick={(e) => {
-						dispatch(addDelMarkedInterval({ currentDay, index, activityType}))
-					}
-				} onMouseOver={(e) => { if (e.buttons === 1) { dispatch(addMarkedInterval({ currentDay, index, activityType }))} }}
-				  onMouseLeave={(e) => { console.log(e.target.buttons); if (e.buttons === 1) { console.log(e.target.key); dispatch(addMarkedInterval({ currentDay, index, activityType })) } }}>
+					return <div key={index} className={className} readOnly 
+					onClick = {(e) => { dispatch(addDelMarkedInterval({ currentDay, index, activityType, selectPairedIntervals: true}))}}
+					onContextMenu = {(e) => { dispatch(addDelMarkedInterval({ currentDay, index, activityType, selectPairedIntervals: false })) }}
+					onMouseOver = {(e) => { if (e.buttons === 1) { dispatch(addMarkedInterval({ currentDay, index, activityType }))}}}
+					onMouseLeave = {(e) => { console.log(e.target.buttons); if (e.buttons === 1) { console.log(e.target.key); dispatch(addMarkedInterval({ currentDay, index, activityType }))}}}>
 			</div>
 		})}
 
